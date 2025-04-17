@@ -1,0 +1,7 @@
+FROM postgres:14
+
+# Copy the SQL script
+COPY transform.sql /transform.sql
+
+# Run the SQL script
+CMD ["psql", "$DATABASE_URL", "-f", "/transform.sql"]
