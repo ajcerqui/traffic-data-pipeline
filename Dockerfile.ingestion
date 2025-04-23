@@ -1,0 +1,13 @@
+FROM jrembold/web2db
+
+# Create the entrypoint script that will pass env vars to cron
+RUN echo '#!/bin/bash' > /entrypoint.sh && \
+    echo 'printenv | grep -v "no_proxy" > /etc/environment' >> /entrypoint.sh && \
+    echo 'exec "$@"' >> /entrypoint.sh && \
+    chmod +x /entrypoint.sh
+
+# Set the new entrypoint
+ENTRYPOINT ["/entrypoint.sh"]
+
+# Keep the original CMD from the base image
+CMD ["npm", "start"]
